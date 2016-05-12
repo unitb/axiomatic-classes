@@ -7,8 +7,6 @@ module Control.Invariant
     , use', uses'
     , HasPrefix(..)
     , (===), isSubsetOf', isProperSubsetOf'
-    , isSubmapOf',isProperSubmapOf'
-    , member'
     , relation
     , trading, holds
     , invariantMessage
@@ -40,7 +38,7 @@ import PseudoMacros
 
 import Text.Printf.TH
 
-import Data.Map.Class (isSubmapOf,isProperSubmapOf,member,IsMap,IsKey)
+-- import Data.Map.Class (isSubmapOf,isProperSubmapOf,member,IsMap,IsKey)
 
 newtype Checked a = Checked { getChecked :: a }
     deriving (Eq,Ord,NFData,Functor,Foldable,Traversable,Typeable)
@@ -191,21 +189,6 @@ isSubsetOf' = relation "/⊆" isSubsetOf
 
 isProperSubsetOf' :: (Ord a,Show a) => Set a -> Set a -> Invariant
 isProperSubsetOf' = relation "/⊂" isProperSubsetOf
-
-{-# INLINE isSubmapOf' #-}
-isSubmapOf' :: (IsMap map,IsKey map k,Eq k,Eq a,Show (map k a)) 
-            => map k a -> map k a -> Invariant
-isSubmapOf' = relation "/⊆" isSubmapOf
-
-{-# INLINE isProperSubmapOf' #-}
-isProperSubmapOf' :: (IsMap map,Eq k, Eq a,Show (map k a),IsKey map k) 
-                  => map k a -> map k a -> Invariant
-isProperSubmapOf' = relation "/⊂" isProperSubmapOf
-
-{-# INLINE member' #-}
-member' :: (Show k,Show (map k a),IsMap map,IsKey map k) 
-        => k -> map k a -> Invariant
-member' = relation "/∈" member
 
 relation :: (Show a,Show b) 
          => String 
