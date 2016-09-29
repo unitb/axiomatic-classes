@@ -64,15 +64,15 @@ instance PrettyPrintable Char where
 instance PrettyPrintable () where
     pretty = show
 
-instance (PrettyPrintable a,PrettyPrintable b) 
+instance (PrettyPrintable a,PrettyPrintable b) 
         => PrettyPrintable (a,b) where
     pretty = show . (_1 %~ Pretty) . (_2 %~ Pretty)
 
-instance (PrettyPrintable a,PrettyPrintable b,PrettyPrintable c) 
+instance (PrettyPrintable a,PrettyPrintable b,PrettyPrintable c) 
         => PrettyPrintable (a,b,c) where
     pretty = show . (_1 %~ Pretty) . (_2 %~ Pretty) . (_3 %~ Pretty)
 
-instance (PrettyPrintable a,PrettyPrintable b,PrettyPrintable c,PrettyPrintable d) 
+instance (PrettyPrintable a,PrettyPrintable b,PrettyPrintable c,PrettyPrintable d) 
         => PrettyPrintable (a,b,c,d) where
     pretty = show . (_1 %~ Pretty) 
                   . (_2 %~ Pretty) 
@@ -83,7 +83,7 @@ instance (PrettyPrintable a
             ,PrettyPrintable b
             ,PrettyPrintable c
             ,PrettyPrintable d
-            ,PrettyPrintable e) 
+            ,PrettyPrintable e) 
         => PrettyPrintable (a,b,c,d,e) where
     pretty = show . (_1 %~ Pretty) 
                   . (_2 %~ Pretty) 

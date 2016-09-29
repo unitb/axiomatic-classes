@@ -36,7 +36,7 @@ makeFactory n = do
     t  <- varT $ mkName "a"
     ts <- reifyInstances n [t]
     tableName <- newName $ "table_" ++ nameBase n
-    let ts' = filter (null.view _1) (ts^.instances) ^. types
+    let ts' = filter (null.view _1) (ts^.instances) ^. types
         instances = partsOf (traverse._InstanceD)
         types = partsOf (traverse._2._AppT._2)
         sig = sigD tableName [t|Factory $(conT n)|]

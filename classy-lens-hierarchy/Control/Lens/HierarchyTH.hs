@@ -151,7 +151,7 @@ classKind n = do
         ClassI (ClassD _ _ [KindedTV _ arg] _ _) _ -> return $ arity arg
         ClassI (ClassD _ _ [PlainTV _] _ _) _ -> return 0
         ClassI (ClassD _ _ [] _ _) _ -> fail "too many class parameters"
-        _ -> fail $ printf "invalid class: %s %s" (show n) (show i)
+        _ -> fail $ printf "invalid class: %s %s" (show n) (show i)
     where
         arity (AppT (AppT ArrowT _) k) = 1 + arity k
         arity StarT = 0
@@ -166,7 +166,7 @@ typeKind n = do
             TyConI (TySynD _ _ t) -> do
                 n <- degree t
                 return n
-            _ -> fail $ printf "typeKind, invalid type: %s\n%s" (show n) (show i)
+            _ -> fail $ printf "typeKind, invalid type: %s\n%s" (show n) (show i)
     where
         degree (AppT t0 _) = (-1 +) <$> degree t0
         degree (ConT n) = typeKind n

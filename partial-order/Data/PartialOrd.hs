@@ -49,7 +49,7 @@ opposite (Comp GT) = Comp LT
 opposite (Comp LT) = Comp GT
 opposite x = x
 
-class PreOrd a where
+class Eq a => PreOrd a where
     partCompare :: a -> a -> PartOrdering
     leq :: a -> a -> Bool
     leq x y = partCompare x y `elem` [Comp LT,Comp EQ]
@@ -115,6 +115,9 @@ instance Ord a => PreOrd (Unordered a) where
             zs = xunionBy (compare `on` fst) ((,True) <$> sort xs) ((,False) <$> sort ys)
             (l,r) = partition snd zs
 
+instance PreOrd Int where
+    partCompare = fmap Comp . compare
+
 instance (Ord k,Eq a) => PreOrd (M.Map k a) where
     partCompare x y = case compare nX nY of
                         GT 
@@ -132,7 +135,7 @@ instance (Ord k,Eq a) => PreOrd (M.Map k a) where
 
 instance (Ord k,Eq a) => PartialOrd (M.Map k a) where
 
-instance Eq a => PreOrd (Quotient a) where
+instance Eq a => PreOrd (Quotient a) where
     partCompare x y
         | x == y    = Comp EQ
         | otherwise = Uncomp

@@ -57,7 +57,7 @@ library
   default-extensions:    ExistentialQuantification, TemplateHaskell, QuasiQuotes, TupleSections, MultiParamTypeClasses, GeneralizedNewtypeDeriving, RankNTypes
   
   -- Other library packages from which modules are imported.
-  build-depends:       base >=4.8 && <5, SafeSemaphore, lens, monad-loops, mtl, semigroups, template-haskell, pseudomacros, filepath, printf-th, string-lenses, string-lenses, invariants, QuickCheck, transformers, bytestring, stm, axiomatic-classes, deepseq, transformer-lenses
+  build-depends:       base >=4.8 && <5, SafeSemaphore, lens, monad-loops, mtl, semigroups, template-haskell, pseudomacros, filepath, printf-th, string-lenses, string-lenses, invariants, QuickCheck, transformers, bytestring, stm, axiomatic-classes, deepseq, transformer-lenses, directory
   
   ghc-options: -W -fwarn-missing-signatures 
          -fwarn-incomplete-uni-patterns

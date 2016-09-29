@@ -61,7 +61,7 @@ class Curried t r f | t r -> f, f r -> t, f t -> r where
 
 curried :: (Curried t r f, Curried t' r' f')
         => Iso (t -> r) (t' -> r') f f'
-curried = withIso curried' $ \f _ -> withIso curried' $ \_ f' -> iso f f'
+curried = withIso curried' $ \f _ -> withIso curried' $ \_ f' -> iso f f'
 
 uncurried :: (Curried t r f, Curried t' r' f')
           => Iso f f' (t -> r) (t' -> r')

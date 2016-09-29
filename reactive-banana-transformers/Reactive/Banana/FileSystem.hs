@@ -67,7 +67,7 @@ instance MonadMomentIO m => MonadMomentIO (FSMomentT m) where
     liftMomentIO m = FileSystemMomentT $ liftMomentIO m
 instance MonadFix m => MonadFix (FSMomentT m) where
     mfix f = FileSystemMomentT $ mfix $ unFSMomentT . f
-instance Monad m => Monad (FSMomentT m) where
+instance Monad m => Monad (FSMomentT m) where
     {-# INLINE (>>=) #-}
     FileSystemMomentT m >>= f = FileSystemMomentT $ m >>= unFSMomentT . f
 instance Frameworks m => Frameworks (FSMomentT m) where
@@ -174,7 +174,7 @@ prop_file_io c = satisfiesWith' showInput showOutput prog' prop (fs,())
         prop :: [Maybe (Maybe String, Maybe String,Maybe ())]
              -> [Maybe (Maybe (Maybe String), Maybe (Maybe String))] 
              -> Property
-        prop input output = flip evalState (Just c,Nothing) $ do
+        prop input output = flip evalState (Just c,Nothing) $ do
                 let runReadWrite :: (Maybe String, Maybe String, Maybe ())
                                  -> State
                                       (Maybe String, Maybe String)

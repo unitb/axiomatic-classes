@@ -113,7 +113,7 @@ views' :: (Controls a b,MonadReader a m)
        => Getting d b c
        -> (c -> d)
        -> m d
-views' ln f = views (content'.ln) f
+views' ln f = views (content'.ln) f
 
 use' :: (Controls a b,MonadState a m) => Getting c b c -> m c
 use' ln = use $ content'.ln
@@ -129,7 +129,7 @@ instance Controls (Checked a) a where
 
 instance (Functor f, Show a, Show1 f, Show1 g, HasInvariant (f (g a))) 
         => HasInvariant (Compose f g a) where
-    invariant = invariant . getCompose
+    invariant = invariant . getCompose
     updateCache = _Wrapped' %~ updateCache
 
 instance HasInvariant a => IsChecked (Checked a) a where
@@ -138,7 +138,7 @@ instance HasInvariant a => IsChecked (Checked a) a where
         where
             -- msg = [printf|invariant failure: \n%s|] $ intercalate "\n" p
             -- p = map fst $ filter (not.snd) $ snd $ execRWS (runInvariant $ invariant x) [] ()
-    content = iso getChecked check
+    content = iso getChecked check
 
 holds :: IsAssertion prop => prop -> Bool
 holds prop = null $ snd $ execRWS (runInvariant $ toInvariant prop) [] ()

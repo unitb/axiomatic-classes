@@ -22,7 +22,7 @@ create :: Default a => State a b -> a
 create cmd = execState cmd def
 
 combine :: Lens' b a -> (a -> a -> a) -> b -> b -> b -> b
-combine ln f x y z = z & ln .~ f (x^.ln) (y^.ln)
+combine ln f x y z = z & ln .~ f (x^.ln) (y^.ln)
 
 combine' :: Lens' b a -> (a -> a -> a) -> b -> b -> State b ()
 combine' ln f x y = modify $ combine ln f x y

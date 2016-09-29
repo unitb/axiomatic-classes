@@ -57,7 +57,7 @@ library
   default-extensions:    DeriveGeneric, TypeFamilies, StandaloneDeriving, RankNTypes, ExistentialQuantification, FlexibleInstances, MultiParamTypeClasses, FunctionalDependencies, QuasiQuotes, TemplateHaskell, DeriveDataTypeable, GeneralizedNewtypeDeriving
   
   -- Other library packages from which modules are imported.
-  build-depends:       base >=4.8 && <5, deepseq, lens, bytestring, either, transformers, hashable, semigroups, template-haskell, monad-loops, cereal, generic-instances, QuickCheck
+  build-depends:       base >=4.8 && <5, deepseq, lens, bytestring, either, transformers, hashable, semigroups, template-haskell, monad-loops, cereal, generic-instances, QuickCheck, bytes, binary
   
   ghc-options: -W -fwarn-missing-signatures 
          -fwarn-incomplete-uni-patterns

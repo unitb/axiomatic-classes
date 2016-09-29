@@ -15,6 +15,10 @@ import Control.Monad
 import Control.Monad.Loops
 
 import Data.ByteString hiding (putStrLn)
+import Data.Bytes.Get as Ser
+import Data.Binary
+import Data.Bytes.Put as Ser
+import Data.Bytes.Serial as Ser
 import Data.Char
 import Data.Data
 import Data.Either.Combinators
@@ -22,7 +26,6 @@ import Data.Functor.Classes
 import Data.Hashable
 import Data.List.NonEmpty
 import Data.Semigroup
-import Data.Serialize as Ser
 import Data.String
 
 import GHC.Generics.Instances
@@ -34,33 +37,33 @@ import Test.QuickCheck
 newtype Packaged a = Package { getPackage :: ByteString }
     deriving (Eq,Ord,Data,Generic,Hashable)
 
-packaged :: (Serialize a,Serialize b)
+packaged :: (Serial a,Serial b)
          => Iso a b (Packaged a) (Packaged b)
-packaged = iso (Package . encode) (fromRight' . decode . getPackage)
+packaged = iso (Package . runPutS . serialize) (fromRight' . runGetS deserialize . getPackage)
 
-unpackaged :: (Serialize a,Serialize b)
+unpackaged :: (Serial a,Serial b)
            => Iso (Packaged a) (Packaged b) a b
 unpackaged = from packaged
 
-instance Serialize a => Wrapped (Packaged a) where
+instance Serial a => Wrapped (Packaged a) where
     type Unwrapped (Packaged a) = a
     _Wrapped' = unpackaged
 
-instance Serialize (Packaged a) where
+instance Serial (Packaged a) where
 
 class OnPackaged a where
     type UnpackedFun a :: *
     onPackaged :: UnpackedFun a -> a
 
-instance (Serialize a,OnPackaged b) => OnPackaged (Packaged a -> b) where
+instance (Serial a,OnPackaged b) => OnPackaged (Packaged a -> b) where
     type UnpackedFun (Packaged a -> b) = a -> UnpackedFun b
     onPackaged f x = onPackaged $ f $ x^.unpackaged
 
-instance Serialize a => OnPackaged (Packaged a) where
+instance Serial a => OnPackaged (Packaged a) where
     type UnpackedFun (Packaged a) = a
     onPackaged = view packaged
 
-instance (Serialize a,Show a) => Show (Packaged a) where
+instance (Serial a,Show a) => Show (Packaged a) where
     show = show . view unpackaged
 
 instance NFData (Packaged a) where
@@ -92,14 +95,14 @@ instance Wrapped (NullTerminated f) where
     type Unwrapped (NullTerminated f) = f Char
     _Wrapped' = iso getNullString NullTerm
 
-instance Serialize (NullTerminated []) where
-    put (NullTerm xs) = mapM_ put xs >> put (chr 0)
-    {-# INLINE get #-}
-    get = NullTerm <$> 
-            whileJust (do x <- get ; return (if x == chr 0 then Nothing else Just x)) return
+instance Serial (NullTerminated []) where
+    serialize (NullTerm xs) = mapM_ serialize xs >> serialize (chr 0)
+    {-# INLINE deserialize #-}
+    deserialize = NullTerm <$> 
+            whileJust (do x <- deserialize ; return (if x == chr 0 then Nothing else Just x)) return
 
-putNullTerminated :: Foldable t => Putter (t Char)
-putNullTerminated xs = mapM_ put xs >> put (chr 0)
+putNullTerminated :: Foldable t => t Char -> Put
+putNullTerminated xs = mapM_ serialize xs >> serialize (chr 0)
 
 getNullTerminatedList :: Get String
 getNullTerminatedList = do
@@ -111,11 +114,12 @@ getNullTerminatedList = do
 getNullTerminatedNEList :: Get (NonEmpty Char)
 getNullTerminatedNEList = maybe mzero return . nonEmpty =<< getNullTerminatedList
 
-instance Serialize (NullTerminated NonEmpty) where
-    put (NullTerm xs) = mapM_ put xs >> put (chr 0)
-    {-# INLINE get #-}
-    get = maybe mzero (return . NullTerm) . nonEmpty =<<
-             whileJust (do x <- get ; return (if x == chr 0 then Nothing else Just x)) return
+instance Serial (NullTerminated NonEmpty) where
+    serialize (NullTerm xs) = mapM_ serialize xs >> serialize (chr 0)
+    {-# INLINE deserialize #-}
+    deserialize = fmap NullTerm $
+        liftM2 (:|) deserialize
+             $ whileJust (do x <- deserialize ; return (if x == chr 0 then Nothing else Just x)) return
 
 instance Hashable NullTerminatedNEString where
 instance Hashable NullTerminatedString where
@@ -131,6 +135,6 @@ instance Monoid NullTerminatedString where
 instance Lift1 f => Lift (NullTerminated f) where
     lift x = [e| NullTerm $(lift1 $ getNullString x) |]
 
-instance (Arbitrary a,Serialize a) => Arbitrary (Packaged a) where
+instance (Arbitrary a,Serial a) => Arbitrary (Packaged a) where
     arbitrary = arbitrary & mapped %~ view packaged
     shrink = unpackaged shrink

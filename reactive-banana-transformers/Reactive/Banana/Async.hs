@@ -448,7 +448,7 @@ pollAllSTM xs = do
 --     cmp  <- newIORef _ -- $ M.mapMaybe (_2 $ fmap Right . leftToMaybe) first
 --     pend <- newIORef _ -- $ M.mapMaybe (_2 rightToMaybe) first
 --     v <- newEmptyTMVarIO
---     return (takeTMVar v, atomically . putTMVar v)
+--     return (takeTMVar v, atomically . putTMVar v)
 
 {-# INLINE runAsyncT #-}
 runAsyncT :: (MonadMomentIO m,MonadFix m)
@@ -502,7 +502,7 @@ runAsyncT (AsyncMoment (AsyncMomentImpl cmd)) run = do
 -- splittingEvents = iso splitEvents splitEvents'
 
 randomSplit :: MonadRandom m 
-            => Map k a 
+            => Map k a 
             -> m (Map k a,Map k a)
 randomSplit m = do
     let cmd x = do
@@ -633,7 +633,7 @@ prop_check_interpret xs = satisfies $ do
         let (e0,_e1) = e^.splittingEvent'
             e0  :: Event Int
             _e1 :: Event ()
-        n <- accumB (sort xs) $ drop 1 <$ e0
+        n <- accumB (sort xs) $ drop 1 <$ e0
         (res,p) <- jobBatch' $ do
                 updateJobs .= (M.fromList . map (id &&& Just .((),).return).take 1 <$> n <@ e0)
         res' <- changePairD res

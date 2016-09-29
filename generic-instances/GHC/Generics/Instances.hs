@@ -17,7 +17,7 @@
         , MultiParamTypeClasses
         , DefaultSignatures #-}
 module GHC.Generics.Instances 
-    ( Generic, genericLift, genericMEmpty, genericMAppend
+    ( Generic, Generic1, genericLift, genericMEmpty, genericMAppend
     , genericMConcat, genericDefault, genericSemigroupMAppend
     , Intersection(..), genericSemigroupMAppendWith
     , genericSemigroupMConcat, genericSemigroupMConcatWith

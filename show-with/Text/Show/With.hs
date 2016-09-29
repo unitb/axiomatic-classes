@@ -1,8 +1,6 @@
 module Text.Show.With where
 
-import Data.Functor.Classes
-
-import GHC.Generics.Instances
+import Prelude.Extras
 
 newtype ShowString' a = ShowString a
 type ShowString = ShowString' String

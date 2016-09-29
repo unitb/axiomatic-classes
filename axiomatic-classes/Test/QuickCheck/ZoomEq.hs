@@ -4,6 +4,7 @@ module Test.QuickCheck.ZoomEq where
 import Control.Invariant 
 import Control.Lens hiding (from,to)
 
+import qualified Data.Array as A
 import Data.List.NonEmpty as NE (toList,NonEmpty)
 import qualified Data.Map as M
 import Data.Functor.Classes
@@ -68,6 +69,8 @@ instance (ZoomEq a,ZoomEq b,ZoomEq c,ZoomEq d,ZoomEq e) => ZoomEq (a,b,c,d,e) wh
 instance ZoomEq a => ZoomEq (NonEmpty a) where
     xs .== ys = NE.toList xs .== NE.toList ys
 
+instance (A.Ix k,Show k,ZoomEq a) => ZoomEq (A.Array k a) where
+    xs .== ys = M.fromList (A.assocs xs) .== M.fromList (A.assocs ys)
 instance (Ord k,Show k,ZoomEq a) => ZoomEq (M.Map k a) where
     xs .== ys = pXS >> pYS >> sequence_ (M.elems $ M.intersectionWithKey prop xs ys)
         where

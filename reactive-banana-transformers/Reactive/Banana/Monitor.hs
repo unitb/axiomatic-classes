@@ -48,7 +48,7 @@ liftE4 :: (Maybe a -> Maybe b -> Maybe c -> Maybe d -> e)
        -> Event c
        -> Event d
        -> Event e
-liftE4 f e0 e1 e2 e3 = getEvent $ f <&> e0 <+> e1 <+> e2 <+> e3
+liftE4 f e0 e1 e2 e3 = getEvent $ f <&> e0 <+> e1 <+> e2 <+> e3
 
 liftE5 :: (Maybe a -> Maybe b -> Maybe c -> Maybe d -> Maybe e -> f) 
        -> Event a
@@ -57,7 +57,7 @@ liftE5 :: (Maybe a -> Maybe b -> Maybe c -> Maybe d -> Maybe e -> f)
        -> Event d
        -> Event e
        -> Event f
-liftE5 f e0 e1 e2 e3 e4 = getEvent $ f <&> e0 <+> e1 <+> e2 <+> e3 <+> e4
+liftE5 f e0 e1 e2 e3 e4 = getEvent $ f <&> e0 <+> e1 <+> e2 <+> e3 <+> e4
 
 instance Applicative Monitor where
     pure x = Monitor x never

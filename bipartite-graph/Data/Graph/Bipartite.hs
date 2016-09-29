@@ -294,7 +294,7 @@ traverseRightWithKey = rightVertices
 traverseRight :: Traversal (BiGraph' key0 v0 key1 vA e) (BiGraph' key0 v0 key1 vB e) vA vB
 traverseRight = rightAL.arVals.traverse
 
-traverseBoth :: Traversal (BiGraph' key0 vA key1 vA e) (BiGraph' key0 vB key1 vB e) vA vB
+traverseBoth :: Traversal (BiGraph' key0 vA key1 vA e) (BiGraph' key0 vB key1 vB e) vA vB
 traverseBoth f (Graph lf rt ed) = Graph <$> (arVals.traverse) f lf 
                                         <*> (arVals.traverse) f rt 
                                         <*> pure ed
@@ -500,7 +500,7 @@ rightVertex v = GR $ do
 edgeInfo :: Edge s0 s1 -> GraphReader' key0 v0 key1 v1 e s0 s1 e
 edgeInfo (Edge i j) = GR $ views edges (! (i,j))
 
-member :: (Ord key0,Ord key1) => key0 -> key1 
+member :: (Ord key0,Ord key1) => key0 -> key1 
        -> BiGraph' key0 v0 key1 v1 e -> Bool
 member k0 k1 g = isJust $ lookup k0 k1 g
 

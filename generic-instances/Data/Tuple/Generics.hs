@@ -114,7 +114,7 @@ instance (GIsTuple constr a,GIsTuple constr b)
     gTraverseTuple p f (x :*: y) = 
             (:*:) <$> gTraverseTuple p f x
                   <*> gTraverseTuple p f y
-    gMakeTuple p f x =
+    gMakeTuple p f x =
             (:*:) <$> gMakeTuple p f (view left <$> x)
                   <*> gMakeTuple p f (view right <$> x)
 
@@ -127,7 +127,7 @@ class GZippableRecord constr a where
 instance GZippableRecord constr c 
       => GZippableRecord constr (M1 a b c) where
     gZipFields p f (M1 x) (M1 y) = M1 <$> gZipFields p f x y
-instance constr b => GZippableRecord constr (K1 a b) where
+instance constr b => GZippableRecord constr (K1 a b) where
     gZipFields Proxy f (K1 x) (K1 y) = K1 <$> f x y
 instance (GZippableRecord constr a,GZippableRecord constr b)
       => GZippableRecord constr (a :*: b) where

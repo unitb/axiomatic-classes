@@ -57,7 +57,7 @@ library
   default-extensions:    TypeOperators, ScopedTypeVariables, TemplateHaskell, DefaultSignatures, TypeSynonymInstances, FlexibleInstances, FlexibleContexts, DeriveFunctor, DeriveFoldable, DeriveTraversable, GeneralizedNewtypeDeriving, DeriveGeneric
   
   -- Other library packages from which modules are imported.
-  build-depends:       base >=4.8 && <5, lens, mtl, either, transformers, hashable, unordered-containers, semigroups, containers, template-haskell, generic-instances, string-lenses, existential, deepseq
+  build-depends:       base >=4.8 && <5, lens, mtl, either, transformers, hashable, unordered-containers, semigroups, containers, template-haskell, generic-instances, string-lenses, existential, deepseq, invariants, axiomatic-classes
   
   -- Directories containing source files.
   hs-source-dirs:      .

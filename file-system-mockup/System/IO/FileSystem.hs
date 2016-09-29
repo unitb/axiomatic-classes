@@ -61,7 +61,7 @@ class Monad m => FileSystem m where
         , createDirectoryIfMissing
         , ifFileExists, doesFileExist
         , doesDirectoryExist #-}
-    readFile  :: ExistingFile s -> m String
+    readFile  :: ExistingFile s -> m String
     readFile fn = getNoParam $ liftFS (NoParam $ readFile fn)
     writeFile :: Pre => FilePath -> String -> m ()
     writeFile fn xs = getNoParam $ liftFS (NoParam $ writeFile fn xs)
@@ -86,7 +86,7 @@ ifFileExists' :: FileSystem m
               => FilePath -> a 
               -> (forall s. ExistingFile s -> m a) 
               -> m a
-ifFileExists' fn x cmd = fromMaybe x <$> ifFileExists fn cmd
+ifFileExists' fn x cmd = fromMaybe x <$> ifFileExists fn cmd
 
 instance Applicative FileSystemM where
     pure x = FileSystemM $ pure x

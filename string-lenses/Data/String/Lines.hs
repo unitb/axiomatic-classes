@@ -96,7 +96,7 @@ prop_prependIndent_suffix xs' ys = zSuffix === ys
     where
         zSuffix = concat $ L.map (L.drop lastLen) $ NE.drop (length zLines - yLen) zLines
         xs = canonicalizeNewline xs'
-        zs  = prependIndent xs ys
+        zs  = prependIndent xs ys
         zLines = lines' zs
         lastLen = length $ NE.last $ lines' xs
         yLen = NE.length $ lines' ys
