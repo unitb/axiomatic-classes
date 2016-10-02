@@ -17,7 +17,7 @@ synopsis:            Specify axioms for type classes and quickCheck all availabl
 
 -- A longer description of the package.
 description:         Provides a way to specify axioms for type classes
-                     and to quicCheck all available instances against
+                     and to quickCheck all available instances against
                      them
 
 -- The license under which the package is released.
