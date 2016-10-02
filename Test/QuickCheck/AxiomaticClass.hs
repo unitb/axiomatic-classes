@@ -1,3 +1,5 @@
+{-# language CPP #-}
+
 module Test.QuickCheck.AxiomaticClass where
 
 import Control.Lens
@@ -10,7 +12,7 @@ import Data.Maybe
 import Prelude hiding (Monoid(..))
 
 import Language.Haskell.TH
-import Language.Haskell.TH.Lens
+import Language.Haskell.TH.Lens hiding (_InstanceD)
 import Language.Haskell.TH.Syntax
 
 import Test.QuickCheck
@@ -60,8 +62,7 @@ quickCheckClassTests cl = do
         match' t t' = error $ [printf|\n%s\n%s\n|] (pprint t) (pprint t')
         match :: Type -> Type -> Type
         match t t' = fromMaybe t' $ t'^?_ForallT.to (\x -> withInt $ substType (M.unions $ mapMaybe (flip match' t) $ x^._2) (x^._3))
-        clInst (InstanceD _ t _) = t
-        clInst _ = undefined
+        clInst = fromMaybe undefined . preview (_InstanceD._2)
         decName (SigD n _) = n
         decName _ = undefined
         subst :: Type -> Dec -> ExpQ
@@ -77,3 +78,15 @@ quickCheckClassTests cl = do
     when (null insts)  $ fail $ [printf|class %s does not have instances|] (show cl)
     when (null axioms) $ fail $ [printf|class %s does not have axioms|] (show cl)
     return props
+
+_InstanceD :: Prism' Dec (Cxt, Type, [Dec])
+_InstanceD = prism' reviewer remitter
+  where
+#if MIN_VERSION_template_haskell(2,11,0)
+      reviewer (x, y, z) = InstanceD Nothing x y z
+      remitter (InstanceD _ x y z) = Just (x, y, z)
+#else
+      reviewer (x, y, z) = InstanceD x y z
+      remitter (InstanceD x y z) = Just (x, y, z)
+#endif
+      remitter _ = Nothing
