@@ -39,13 +39,10 @@ packages:
 - '.'
 - location:
     git: https://github.com/literate-unitb/invariants.git
-    commit: fe80d6e750e8cffba3a9d8cf2b4d34650aca4059
+    commit: adf1145cdcab415698dd7d3c179f6d0a1a0948ff
 - location:
     git: https://github.com/literate-unitb/printf-th.git
     commit: e7c85fc6f210516e9c66e1e7f6bf52996653629c
-- location:
-    git: https://github.com/literate-unitb/th-lift-deriving.git
-    commit: 3efb6a9358cae2bd47606b59a97dad3ddd84ffae
 # The following packages have been ignored due to incompatibility with the
 # resolver compiler, dependency conflicts with other packages
 # or unsatisfied dependencies.
