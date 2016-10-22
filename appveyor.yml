@@ -13,22 +13,10 @@ environment:
   global:
     STACK_ROOT: "c:\\sr"
   matrix: 
-    - platform: x86
-      lts: --resolver lts-3
-    - platform: x86
-      lts: --resolver lts-6
-    - platform: x86
-      lts: --resolver lts-7
-    - platform: x86
-      lts: ""
-    - platform: x64
-      lts: --resolver lts-3
-    - platform: x64
-      lts: --resolver lts-6
-    - platform: x64
-      lts: --resolver lts-7
-    - platform: x64
-      lts: ""
+    - lts: --resolver lts-3
+    - lts: --resolver lts-6
+    - lts: --resolver lts-7
+    - lts: ""
 
 platform:
   - x86
