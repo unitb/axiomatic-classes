@@ -17,16 +17,18 @@ environment:
   matrix: 
     - lts: --resolver lts-3
     # - lts: --resolver lts-6
-    # - lts: --resolver lts-7
+    - lts: --resolver lts-7
     - lts: ""
 
 platform:
   # - x86
   - x64
 
+build:
+  parallel: true
+
 build_script:
 - stack setup %lts% > nul
-- cmd: echo %lts% # $(lts) {lts} $lts
 - cmd: echo "" | stack --no-terminal build %lts% --test
 
 test_script:
