@@ -6,7 +6,7 @@ cache:
 
 build: off
 
-before_test:
+install:
 - curl -sS -ostack.zip -L --insecure http://www.stackage.org/stack/windows-i386
 - 7z x stack.zip stack.exe
 
@@ -26,9 +26,8 @@ platform:
 
 build_script:
 - stack setup %lts% > nul
-- cmd: echo $lts$ $(lts) {lts} $lts
 - cmd: echo %lts% # $(lts) {lts} $lts
-- cmd: echo "" | stack --no-terminal build %lts%
+- cmd: echo "" | stack --no-terminal build %lts% --enable-tests
 
 test_script:
 # The ugly echo "" hack is to avoid complaints about 0 being an invalid file
