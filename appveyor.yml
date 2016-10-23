@@ -13,6 +13,7 @@ cache:
 - "c:\\sr\\templates"
 - "C:\\stack\\.stack-work\\downloaded"
 - "C:\\stack\\.stack-work\\install"
+- "C:\\stack\\.stack-work\\logs"
 
 install:
 - curl -sS -ostack.zip -L --insecure http://www.stackage.org/stack/windows-i386
