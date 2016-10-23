@@ -1,6 +1,16 @@
 # Disabled cache in hope of improving reliability of AppVeyor builds
 cache:
-- "c:\\sr" # stack root, short paths == fewer problems
+# - "c:\\sr" # stack root, short paths == fewer problems
+- "c:\\sr\\build-plan"
+- "c:\\sr\\build-plan-cache"
+- "c:\\sr\\config.yaml"
+- "c:\\sr\\global-project"
+- "c:\\sr\\indices"
+- "c:\\sr\\precompiled"
+- "c:\\sr\\programs"
+- "c:\\sr\\setup-exe-cache"
+- "c:\\sr\\snapshots"
+- "c:\\sr\\templates"
 - "C:\\stack\\.stack-work\\downloaded"
 - "C:\\stack\\.stack-work\\install"
 
