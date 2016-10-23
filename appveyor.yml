@@ -14,8 +14,8 @@ environment:
     STACK_ROOT: "c:\\sr"
   matrix: 
     - lts: --resolver lts-3
-    - lts: --resolver lts-6
-    - lts: --resolver lts-7
+    # - lts: --resolver lts-6
+    # - lts: --resolver lts-7
     - lts: ""
 
 platform:
@@ -26,4 +26,4 @@ test_script:
 - stack setup > nul
 # The ugly echo "" hack is to avoid complaints about 0 being an invalid file
 # descriptor
-- echo "" | stack --no-terminal test $(lts)
+- echo "" | stack --no-terminal test {lts}
