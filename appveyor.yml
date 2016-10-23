@@ -1,7 +1,8 @@
 # Disabled cache in hope of improving reliability of AppVeyor builds
 cache:
 - "c:\\sr" # stack root, short paths == fewer problems
-- "C:\\stack\\.stack-work"
+- "C:\\stack\\.stack-work\\downloaded"
+- "C:\\stack\\.stack-work\\install"
 
 build: off
 
@@ -23,10 +24,13 @@ platform:
   # - x86
   - x64
 
-test_script:
-- stack setup > nul
-# The ugly echo "" hack is to avoid complaints about 0 being an invalid file
-# descriptor
+build_script:
+- stack setup %lts% > nul
 - cmd: echo $lts$ $(lts) {lts} $lts
 - cmd: echo %lts% # $(lts) {lts} $lts
+- cmd: echo "" | stack --no-terminal build %lts%
+
+test_script:
+# The ugly echo "" hack is to avoid complaints about 0 being an invalid file
+# descriptor
 - cmd: echo "" | stack --no-terminal test %lts%
