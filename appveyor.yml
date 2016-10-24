@@ -33,6 +33,10 @@ platform:
   # - x86
   - x64
 
+skip_commits:
+  files:
+    - .travis.yml
+ 
 build:
   parallel: true
 
