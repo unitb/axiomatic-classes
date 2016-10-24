@@ -20,8 +20,8 @@ cache:
   - $HOME/.ghc
   - $HOME/.cabal
   - $HOME/.stack
-  - $HOME/axiomatic-classes/axiomatic-classes/.stack-work/install
-  - $HOME/axiomatic-classes/axiomatic-classes/.stack-work/downloaded
+  - $HOME/literate-unitb/axiomatic-classes/.stack-work/install
+  - $HOME/literate-unitb/axiomatic-classes/.stack-work/downloaded
 
 # The different configurations we want to test. We have BUILD=cabal which uses
 # cabal-install, and BUILD=stack which uses Stack. More documentation on each
