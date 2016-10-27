@@ -37,6 +37,8 @@ resolver: lts-6.18
 # will not be run. This is useful for tweaking upstream packages.
 packages:
 - '.'
+- ../portable-template-haskell-lens
+- ../quickcheck-report
 - location:
     git: https://github.com/literate-unitb/invariants.git
     commit: adf1145cdcab415698dd7d3c179f6d0a1a0948ff
