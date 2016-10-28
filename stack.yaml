@@ -37,14 +37,6 @@ resolver: lts-6.18
 # will not be run. This is useful for tweaking upstream packages.
 packages:
 - '.'
-- ../portable-template-haskell-lens
-- ../quickcheck-report
-- location:
-    git: https://github.com/literate-unitb/invariants.git
-    commit: adf1145cdcab415698dd7d3c179f6d0a1a0948ff
-- location:
-    git: https://github.com/literate-unitb/printf-th.git
-    commit: e7c85fc6f210516e9c66e1e7f6bf52996653629c
 # The following packages have been ignored due to incompatibility with the
 # resolver compiler, dependency conflicts with other packages
 # or unsatisfied dependencies.
@@ -55,6 +47,10 @@ packages:
 extra-deps:
 - assert-0.0.1.2
 - pseudomacros-0.0.2
+- th-printf-0.3.1
+- quickcheck-report-0.1.0.0
+- portable-template-haskell-lens-0.1.0.0
+- control-invariants-0.1.0.0
 
 # Override default flag values for local packages and extra-deps
 flags: {}

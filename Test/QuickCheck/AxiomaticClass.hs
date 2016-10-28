@@ -60,7 +60,7 @@ quickCheckClassTests cl = do
         match' (VarT x) t   = Just $ M.singleton x t
         match' (AppT x y) t = (t^?_AppT) >>= \(x',y') -> M.union <$> match' x x' <*> match' y y'
         match' ArrowT t     = M.empty <$ (t^?_ArrowT)
-        match' t t' = error $ [printf|\n%s\n%s\n|] (pprint t) (pprint t')
+        match' t t' = error $ [s|\n%s\n%s\n|] (pprint t) (pprint t')
         match :: Type -> Type -> Type
         match t t' = fromMaybe t' $ t'^?_ForallT.to (\x -> withInt $ substType (M.unions $ mapMaybe (flip match' t) $ x^._2) (x^._3))
         clInst = fromMaybe undefined . preview (_InstanceD'._2)
@@ -73,9 +73,9 @@ quickCheckClassTests cl = do
         propName n = [| PropName $(stringE n) $(lift $ loc_filename loc) $(lift $ fst $ loc_start loc) |]
         quickCheckInvoke :: Type -> Dec -> ExpQ
         quickCheckInvoke t d = [e| (
-            $(propName $ [printf|Axiom of %s : %s|] (pprint t) (nameBase $ decName d))
+            $(propName $ [s|Axiom of %s : %s|] (pprint t) (nameBase $ decName d))
             , property $(subst t d)) |]
         props = quickCheckInvoke <$> insts <*> axioms
-    when (null insts)  $ fail $ [printf|class %s does not have instances|] (show cl)
-    when (null axioms) $ fail $ [printf|class %s does not have axioms|] (show cl)
+    when (null insts)  $ fail $ [s|class %s does not have instances|] (show cl)
+    when (null axioms) $ fail $ [s|class %s does not have axioms|] (show cl)
     return props
