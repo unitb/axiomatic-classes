@@ -49,7 +49,7 @@ cabal-version:       >=1.10
 
 source-repository head
   type: git
-  location: https://github.com/literate-unitb/axiomatic-classes.git
+  location: https://github.com/unitb/axiomatic-classes.git
 
 library
   -- Modules exported by the library.

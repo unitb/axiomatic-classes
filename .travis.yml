@@ -20,8 +20,8 @@ cache:
   - $HOME/.ghc
   - $HOME/.cabal
   - $HOME/.stack
-  - $HOME/literate-unitb/axiomatic-classes/.stack-work/install
-  - $HOME/literate-unitb/axiomatic-classes/.stack-work/downloaded
+  - $HOME/unitb/axiomatic-classes/.stack-work/install
+  - $HOME/unitb/axiomatic-classes/.stack-work/downloaded
 
 # The different configurations we want to test. We have BUILD=cabal which uses
 # cabal-install, and BUILD=stack which uses Stack. More documentation on each
@@ -205,5 +205,5 @@ deploy:
   password:
     secure: YD8lXL1wTdcikE+y4ZT4vccj02FQBDkP9erGprwPSlyp6O1Kz+3FgePnqjo72OSjbg78QMMNaRMEAyiA1pjXvO2x+XpGfZiStOKS2LUCoMddfA/16C7uFl/eu9fCvMMYOVtsM36AI7GTnBhuVzvQ4/8UDkYm5hHK1lGbMK52WLDGIm5go0Lp9qyzNHdmKNntwpjcHHrMT9JNsNYqbE4WnaVqheB8KyEb2+aG7/+PU9wmNBcwu4w/PSrGTLzxf25iwE8MwD80hgijaVRHglg4VtmKNUl3WzajcnhE3YRYjySaE0eFMfiZSnvy5WlER0gAey8xfcDv+9/lKHeIX/1fkeIut5eUagaIZ8syK55FTU+JE3C+oK2GpGSvNXk+tNMQlVc00BkfzeNLb4xcmvM0zD2iGuqra6Y5DmDs/45NeGdNbEtDOi0HB4leFGB87fUyqeu4E3rVxxsWsD4aYe+4g7H9fkeblJTKKPHLb/ODhnELkyWaUox3lf/Sh15UJfBZLF5QEjL5qH95rYaZmdfsSdjCQMuRtObzotivMIi+bnpTu0wb+dEcqxL9tGYaZne9puytFC0RTX3io1WHYDISJW03aoL1wGawkJKUGLGcTtuQL5DJ+BMP1hFa4lyzkNjU1MhePRdm9uRhinIRzp+RMvSBUWuq5R53yz8vsn0yk54=
   on:
-    repo: literate-unitb/axiomatic-classes
+    repo: unitb/axiomatic-classes
     tags: true
