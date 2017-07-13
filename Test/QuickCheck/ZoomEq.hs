@@ -80,17 +80,17 @@ instance (Ord k,Show k,ZoomEq a) => ZoomEq (M.Map k a) where
             prop k x y = ("key: " ++ show k) ## (x .== y)
 
 instance (Eq k,Hashable k,Show k,ZoomEq a) => ZoomEq (Lazy.HashMap k a) where
-    xs .== ys = pXS >> pYS >> sequence_ (Lazy.elems $ Lazy.intersectionWithKey prop xs ys)
+    xs .== ys = pXS >> pYS >> sequence_ (Lazy.elems $ Lazy.intersectionWith prop (Lazy.mapWithKey (,) xs) ys)
         where
             xs' = xs `Lazy.difference` ys
             ys' = ys `Lazy.difference` xs
             pXS = ("left keys:  " ++ show (Lazy.keys xs')) ## Lazy.null xs'
             pYS = ("right keys: " ++ show (Lazy.keys ys')) ## Lazy.null ys'
-            prop k x y = ("key: " ++ show k) ## (x .== y)
+            prop (k,x) y = ("key: " ++ show k) ## (x .== y)
 
 instance ZoomEq a => ZoomEq [a] where
     xs .== ys = sequence_ $
-                    zipWith3 (\i x y -> show i ## x .== y) [0..] xs ys
+                    zipWith3 (\i x y -> show i ## x .== y) [0 :: Int ..] xs ys
                 ++ ["length" ## (length xs === length ys)]
 
 class GZoomEq a where
