@@ -81,6 +81,8 @@ library
     , quickcheck-report
     , semigroups
     , monad-loops
+    , unordered-containers
+    , hashable
 
   ghc-options: -W -fwarn-missing-signatures 
          -fwarn-incomplete-uni-patterns

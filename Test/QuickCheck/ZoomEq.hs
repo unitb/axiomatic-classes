@@ -4,8 +4,10 @@ module Test.QuickCheck.ZoomEq where
 import Control.Invariant 
 import Control.Lens hiding (from,to)
 
+import Data.Hashable
 import Data.List.NonEmpty as NE (toList,NonEmpty)
 import qualified Data.Map as M
+import qualified Data.HashMap.Lazy as Lazy
 import Data.Functor.Classes
 import Data.Functor.Compose
 import Data.Proxy
@@ -75,6 +77,15 @@ instance (Ord k,Show k,ZoomEq a) => ZoomEq (M.Map k a) where
             ys' = ys `M.difference` xs
             pXS = ("left keys:  " ++ show (M.keys xs')) ## M.null xs'
             pYS = ("right keys: " ++ show (M.keys ys')) ## M.null ys'
+            prop k x y = ("key: " ++ show k) ## (x .== y)
+
+instance (Eq k,Hashable k,Show k,ZoomEq a) => ZoomEq (Lazy.HashMap k a) where
+    xs .== ys = pXS >> pYS >> sequence_ (Lazy.elems $ Lazy.intersectionWithKey prop xs ys)
+        where
+            xs' = xs `Lazy.difference` ys
+            ys' = ys `Lazy.difference` xs
+            pXS = ("left keys:  " ++ show (Lazy.keys xs')) ## Lazy.null xs'
+            pYS = ("right keys: " ++ show (Lazy.keys ys')) ## Lazy.null ys'
             prop k x y = ("key: " ++ show k) ## (x .== y)
 
 instance ZoomEq a => ZoomEq [a] where
